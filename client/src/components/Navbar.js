@@ -13,6 +13,7 @@ const Navbar = props => {
     return (
       <nav className="navbar">
         <Link to="/">Home</Link>
+        <Link to="/add">List a parking spot</Link>
         <Link onClick={logout} to="/">
           Logout
         </Link>
