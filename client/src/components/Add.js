@@ -33,8 +33,9 @@ const Add = props => {
     axios
       .post("/parking-spots/add", spot)
       .then(response => {
-        // redirect
-        props.history.push("/");
+        console.log(response);
+        let spotId = response.data.createdSpot._id;
+        props.history.push(`/listing-detail/${spotId}`);
         // update state for user in <App/>
         if (response.data.user.role === "basic") {
           props.setUser(response.data.user);

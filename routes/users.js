@@ -83,6 +83,7 @@ router.delete("/logout", (req, res, next) => {
 });
 
 router.get("/loggedin", (req, res) => {
+  console.log("USERRRRRRR", req.session.user);
   res.json(req.session.user);
 });
 

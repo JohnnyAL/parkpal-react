@@ -1,14 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
+import SpotsList from "./SpotsList";
 
-const Spots = props => {
+const Spots = () => {
   const [spots, setSpots] = useState([]);
 
-  //use effect here to set state of spots (axios call to get all spots)
+  useEffect(() => {
+    axios.get("/parking-spots/listings").then(response => {
+      setSpots(response.data);
+    });
+  }, []);
 
   return (
     <div>
       <h1>Available Parking Spots</h1>
+      <SpotsList spots={spots} />
     </div>
   );
 };

@@ -4,17 +4,15 @@ const Spot = require("../models/Spot");
 const User = require("../models/User");
 const geocoder = require("../utils/geocoder");
 
-router.get("/list", (req, res) => {
+router.get("/listings", (req, res) => {
   Spot.find()
     .then(spots => {
-      res.render("parking-spots/list.hbs", {
-        spots,
-        spotDetail: JSON.stringify(spots),
-        user: req.session.user
-      });
+      res.json(spots);
     })
     .catch(err => {
-      next(err);
+      res.status(500).json({
+        message: err.message
+      });
     });
 });
 
@@ -167,11 +165,13 @@ router.post("/add", loginCheck, (req, res, next) => {
         });
     })
     .catch(err => {
-      res.status(500).json({ message: "Error while validating" });
+      res.status(500).json({
+        message: err.message
+      });
     });
 });
 
-router.get("/detail/:id", (req, res, next) => {
+router.get("/detail/:id", (req, res) => {
   Spot.findById(req.params.id)
     // .populate("owner - also can populate reviews here when added. Look at monti's room example for syntax")
     .populate({
@@ -187,16 +187,18 @@ router.get("/detail/:id", (req, res, next) => {
         showDelete = true;
         showEdit = true;
       }
-      res.render("parking-spots/detail.hbs", {
+      //make sure I'm using on this data vvv or else get rid of it
+      res.json({
         spot,
         spotDetail: JSON.stringify(spot),
         showDelete: showDelete,
-        showEdit: showEdit,
-        user: req.session.user
+        showEdit: showEdit
       });
     })
     .catch(err => {
-      next(err);
+      res.status(500).json({
+        message: err.message
+      });
     });
 });
 
@@ -213,63 +215,82 @@ router.post("/edit/:id", (req, res, next) => {
   const {
     name,
     description,
-    streetAddress,
+    street_address,
     city,
     state,
-    zipCode,
+    zip_code,
     country,
-    size,
     type,
-    startDate,
-    endDate,
-    startTime,
-    endTime,
+    size,
+    start_date,
+    end_date,
+    start_time,
+    end_time,
     price
   } = req.body;
 
-  let longitude;
-  let latitude;
+  if (
+    !name ||
+    !description ||
+    !street_address ||
+    !city ||
+    !state ||
+    !zip_code ||
+    !country ||
+    !type ||
+    !size ||
+    !start_date ||
+    !end_date ||
+    !start_time ||
+    !end_time ||
+    !price
+  ) {
+    return res.status(400).json({
+      message: "Please enter valid information for all fields below."
+    });
+  }
 
   geocoder
-    .geocode(
-      `${req.body.streetAddress}, ${req.body.city}, ${req.body.state} ${req.body.zipCode}, ${req.body.country}`
-    )
+    .geocode(`${street_address}, ${city}, ${state} ${zip_code}, ${country}`)
     .then(res => {
       let longitude = res[0].longitude;
       let latitude = res[0].latitude;
-      // console.log("LONGITUDE", longitude, "LATITUDE", latitude);
       return { longitude, latitude };
     })
-    .then(geoLocation => {
+    .then(geolocation => {
       return Spot.updateOne(
         { _id: req.params.id },
         {
           name,
           description,
-          streetAddress,
-          city,
-          state,
-          zipCode,
-          country,
-          geoLocation: {
-            type: "Point",
-            coordinates: [geoLocation.longitude, geoLocation.latitude]
+          address: {
+            street_address,
+            city,
+            state,
+            zip_code,
+            country
           },
-          size,
+          geolocation: {
+            type: "Point",
+            coordinates: [geolocation.longitude, geolocation.latitude]
+          },
           type,
-          startDate,
-          endDate,
-          startTime: startDate + " " + startTime,
-          endTime: endDate + " " + endTime,
+          size,
+          start_date,
+          end_date,
+          start_time: start_date + " " + start_time,
+          end_time: end_date + " " + end_time,
           price,
           owner: req.session.user._id
         }
-      ).then(() => {
-        res.redirect(`/parking-spots/detail/${req.params.id}`);
+      ).then(updatedSpot => {
+        res.json(updatedSpot);
       });
     })
     .catch(err => {
-      next(err);
+      res.status(500).json({
+        message: err.message
+      });
     });
 });
 

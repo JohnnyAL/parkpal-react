@@ -4,6 +4,10 @@ const { Schema } = mongoose;
 const spotSchema = new Schema(
   {
     name: String,
+    image: {
+      type: String,
+      default: "/blue-car.png"
+    },
     description: String,
     address: {
       street_address: String,
