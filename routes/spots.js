@@ -40,12 +40,12 @@ router.get("/filtered-query", (req, res, next) => {
       return Spot.find({
         $and: [
           {
-            start_time: {
-              $gte: req.query.start_date + " " + req.query.start_time
-            }
+            start_time: { $lt: req.query.end_date + " " + req.query.end_time }
           },
           {
-            end_time: { $lte: req.query.end_date + " " + req.query.end_time }
+            end_time: {
+              $gt: req.query.start_date + " " + req.query.start_time
+            }
           },
           {
             geolocation: {

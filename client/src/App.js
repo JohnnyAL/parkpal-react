@@ -9,8 +9,9 @@ import Add from "./components/Add.js";
 import Edit from "./components/Edit.js";
 import Spots from "./components/Spots.js";
 import SpotDetail from "./components/SpotDetail.js";
+import Booking from "./components/Booking.js";
 
-let App = props => {
+const App = props => {
   let [user, setUser] = useState(props.user);
 
   let setUserState = userObj => {
@@ -47,6 +48,7 @@ let App = props => {
         path="/listing-detail/:spotId"
         render={props => <SpotDetail {...props} />}
       />
+      <Route path="/booking/:spotId" render={props => <Booking {...props} />} />
     </div>
   );
 };

@@ -49,6 +49,12 @@ const spotSchema = new Schema(
         type: Schema.Types.ObjectId,
         ref: "Review"
       }
+    ],
+    bookings: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Booking"
+      }
     ]
   },
   {

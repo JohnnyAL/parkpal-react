@@ -21,7 +21,7 @@ const SpotsList = props => {
           </p>
           <Link to={`/listing-detail/${spot._id}`}>Spot Details</Link>
           <p>Price: ${spot.price}/hour</p>
-          <button>Book Now</button>
+          <Link to={`/booking/${spot._id}`}>Book Now</Link>
           <hr />
         </div>
       );
