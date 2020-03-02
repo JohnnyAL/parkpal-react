@@ -5,12 +5,10 @@ const Edit = props => {
   const spotId = props.match.params.spotId;
   const [spot, setSpot] = useState(null);
   const [message, setMessage] = useState("");
-  let data;
 
   useEffect(() => {
-    axios.get(`/parking-spots/detail/${spotId}`).then(res => {
-      data = res.data.spot;
-      console.log(data);
+    axios.get(`/parking-spots/edit/${spotId}`).then(res => {
+      let data = res.data;
       setSpot({
         name: data.name,
         description: data.description,
@@ -24,14 +22,13 @@ const Edit = props => {
         start_date: data.start_date.slice(0, 10),
         end_date: data.end_date.slice(0, 10),
         start_time: new Date(data.start_time).toTimeString().slice(0, 5),
-        end_time: new Date(data.start_time).toTimeString().slice(0, 5),
+        end_time: new Date(data.end_time).toTimeString().slice(0, 5),
         price: data.price
       });
     });
   }, []);
 
   const handleChange = event => {
-    console.log(event.target.value);
     setSpot({ ...spot, [event.target.name]: event.target.value });
   };
 
@@ -41,7 +38,6 @@ const Edit = props => {
     axios
       .post(`/parking-spots/edit/${spotId}`, spot)
       .then(response => {
-        // redirect
         props.history.push(`/listing-detail/${spotId}`);
       })
       .catch(err => {

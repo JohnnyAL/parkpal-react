@@ -60,6 +60,6 @@ const spotSchema = new Schema(
 );
 
 const Spot = mongoose.model("Spot", spotSchema);
-spotSchema.index({ geoLocation: "2dsphere" });
+spotSchema.index({ geolocation: "2dsphere" });
 
 module.exports = Spot;

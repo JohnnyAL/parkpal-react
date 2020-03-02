@@ -4,53 +4,63 @@ const Spot = require("../models/Spot");
 const User = require("../models/User");
 const geocoder = require("../utils/geocoder");
 
-router.get("/listings", (req, res) => {
-  Spot.find()
-    .then(spots => {
-      res.json(spots);
-    })
-    .catch(err => {
-      res.status(500).json({
-        message: err.message
-      });
-    });
-});
+// router.get("/listings", (req, res) => {
+//   Spot.find()
+//     .then(spots => {
+//       res.json(spots);
+//     })
+//     .catch(err => {
+//       res.status(500).json({
+//         message: err.message
+//       });
+//     });
+// });
 
 router.get("/filtered-query", (req, res, next) => {
-  let longitude;
-  let latitude;
-  console.log("LOCATION", req.query.location);
+  if (
+    !req.query.location ||
+    !req.query.start_date ||
+    !req.query.start_time ||
+    !req.query.end_date ||
+    !req.query.end_time
+  ) {
+    return res.status(400).json({
+      message: "Please enter valid information for all fields below."
+    });
+  }
   geocoder
     .geocode(req.query.location)
     .then(res => {
       let longitude = res[0].longitude;
       let latitude = res[0].latitude;
-      // console.log("LONGITUDE", longitude, "LATITUDE", latitude);
-      console.log("LONGITUDE", longitude, "LATITUDE", latitude);
+
       return { longitude, latitude };
     })
-    .then(geoLocation => {
-      console.log("GEOLOACTION", geoLocation);
+    .then(geolocation => {
       return Spot.find({
         $and: [
           {
-            startTime: { $gte: req.query.startDate + " " + req.query.startTime }
+            start_time: {
+              $gte: req.query.start_date + " " + req.query.start_time
+            }
           },
-          { endTime: { $lte: req.query.endDate + " " + req.query.endTime } },
           {
-            geoLocation: {
+            end_time: { $lte: req.query.end_date + " " + req.query.end_time }
+          },
+          {
+            geolocation: {
               $near: {
                 $maxDistance: 200000,
                 $geometry: {
                   type: "Point",
-                  coordinates: [geoLocation.longitude, geoLocation.latitude]
+                  coordinates: [geolocation.longitude, geolocation.latitude]
                 }
               }
             }
           }
         ]
       }).then(spots => {
-        res.render("parking-spots/list.hbs", {
+        res.json({
           spots,
           spotDetail: JSON.stringify(spots),
           user: req.session.user
@@ -70,9 +80,9 @@ const loginCheck = (req, res, next) => {
   }
 };
 
-router.get("/add", loginCheck, (req, res) => {
-  res.render("parking-spots/add.hbs", { user: req.session.user });
-});
+// router.get("/add", loginCheck, (req, res) => {
+//   res.render("parking-spots/add.hbs", { user: req.session.user });
+// });
 
 router.post("/add", loginCheck, (req, res, next) => {
   const {
@@ -202,13 +212,16 @@ router.get("/detail/:id", (req, res) => {
     });
 });
 
-router.get("/edit/:id", loginCheck, (req, res) => {
-  Spot.findById(req.params.id).then(spot => {
-    console.log("spot", spot);
-    res.render("parking-spots/edit.hbs", {
-      spot: spot
+router.get("/edit/:id", (req, res) => {
+  Spot.findById(req.params.id)
+    .then(spot => {
+      res.json(spot);
+    })
+    .catch(err => {
+      res.status(500).json({
+        message: err.message
+      });
     });
-  });
 });
 
 router.post("/edit/:id", (req, res, next) => {
@@ -253,6 +266,7 @@ router.post("/edit/:id", (req, res, next) => {
   geocoder
     .geocode(`${street_address}, ${city}, ${state} ${zip_code}, ${country}`)
     .then(res => {
+      console.log("GEOLOCATION", res);
       let longitude = res[0].longitude;
       let latitude = res[0].latitude;
       return { longitude, latitude };
@@ -283,8 +297,8 @@ router.post("/edit/:id", (req, res, next) => {
           price,
           owner: req.session.user._id
         }
-      ).then(updatedSpot => {
-        res.json(updatedSpot);
+      ).then(() => {
+        res.json({ message: "Post successfully updated" });
       });
     })
     .catch(err => {
@@ -294,13 +308,15 @@ router.post("/edit/:id", (req, res, next) => {
     });
 });
 
-router.get("/delete/:id", (req, res, next) => {
+router.delete("/delete/:id", (req, res, next) => {
   Spot.deleteOne({ _id: req.params.id, owner: req.session.user._id })
     .then(() => {
-      res.redirect("/parking-spots/list");
+      res.json({ message: "Post successfully deleted" });
     })
     .catch(err => {
-      next(err);
+      res.status(500).json({
+        message: err.message
+      });
     });
 });
 

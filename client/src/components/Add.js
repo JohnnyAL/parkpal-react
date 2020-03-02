@@ -22,8 +22,6 @@ const Add = props => {
   const [message, setMessage] = useState("");
 
   const handleChange = event => {
-    // console.log(event.target.value);
-    // console.log(spot);
     setSpot({ ...spot, [event.target.name]: event.target.value });
   };
 
@@ -33,7 +31,6 @@ const Add = props => {
     axios
       .post("/parking-spots/add", spot)
       .then(response => {
-        console.log(response);
         let spotId = response.data.createdSpot._id;
         props.history.push(`/listing-detail/${spotId}`);
         // update state for user in <App/>

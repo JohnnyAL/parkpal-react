@@ -10,6 +10,9 @@ const app = express();
 
 app.use(express.urlencoded({ extended: true })); // sets the `body` object in the `request` with the values from an HTML POST form
 
+const Spot = require("./models/Spot");
+Spot.createIndexes();
+
 app.use(express.json()); // sets the `body` object in the `request` with the data coming from a request with a `body` (request we'll issue with axios, fetch...)
 
 app.use(logger("dev")); // this middleware will log every response that is issued (with the status code) in the console

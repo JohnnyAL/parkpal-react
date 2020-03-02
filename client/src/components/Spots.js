@@ -2,13 +2,14 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import SpotsList from "./SpotsList";
 
-const Spots = () => {
-  const [spots, setSpots] = useState([]);
+const Spots = props => {
+  const [spots, setSpots] = useState(null);
 
   useEffect(() => {
-    axios.get("/parking-spots/listings").then(response => {
-      setSpots(response.data);
-    });
+    // axios.get("/parking-spots/listings").then(response => {
+    //   setSpots(response.data);
+    // });
+    setSpots(props.location.state?.spots);
   }, []);
 
   return (
