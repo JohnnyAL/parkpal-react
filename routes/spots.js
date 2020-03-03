@@ -310,13 +310,23 @@ router.post("/edit/:id", (req, res, next) => {
 
 router.delete("/delete/:id", (req, res, next) => {
   Spot.deleteOne({ _id: req.params.id, owner: req.session.user._id })
-    .then(() => {
-      res.json({ message: "Post successfully deleted" });
+    .then(response => {
+      res.json(response);
     })
     .catch(err => {
       res.status(500).json({
         message: err.message
       });
+    });
+});
+
+router.get("/my-listings", (req, res, next) => {
+  Spot.find({ owner: req.session.user._id })
+    .then(listings => {
+      res.json(listings);
+    })
+    .catch(err => {
+      next(err);
     });
 });
 

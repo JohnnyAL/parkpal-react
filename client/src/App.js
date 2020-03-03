@@ -10,6 +10,8 @@ import Edit from "./components/Edit.js";
 import Spots from "./components/Spots.js";
 import SpotDetail from "./components/SpotDetail.js";
 import Booking from "./components/Booking.js";
+import MyBookings from "./components/MyBookings.js";
+import MyListings from "./components/MyListings.js";
 
 const App = props => {
   let [user, setUser] = useState(props.user);
@@ -49,6 +51,8 @@ const App = props => {
         render={props => <SpotDetail {...props} />}
       />
       <Route path="/booking/:spotId" render={props => <Booking {...props} />} />
+      <Route path="/my-bookings" component={MyBookings} />
+      <Route path="/my-listings" render={props => <MyListings {...props} />} />
     </div>
   );
 };

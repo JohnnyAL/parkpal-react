@@ -12,10 +12,11 @@ const Navbar = props => {
   if (props.user) {
     return (
       <nav className="navbar">
-        <Link to="/">Home</Link>
-        <Link to="/add">List a parking spot</Link>
+        <Link to="/">Home</Link> <Link to="/add">List a parking spot</Link>{" "}
+        <Link to="/my-bookings">My Bookings</Link>{" "}
+        <Link to="/my-listings">My Listings</Link>{" "}
         <Link onClick={logout} to="/">
-          Logout
+          Log out
         </Link>
       </nav>
     );

@@ -10,7 +10,6 @@ const Booking = props => {
     end_time: ""
   });
   const [message, setMessage] = useState("");
-  const [redirect, setRedirect] = useState(false);
 
   const handleChange = event => {
     setBooking({ ...booking, [event.target.name]: event.target.value });
@@ -22,8 +21,7 @@ const Booking = props => {
       .post(`/booking/add/${spotId}`, booking)
       .then(res => {
         // should take to mybookings and prompt a message "successfully booked";
-        // Push booking ref to spot document
-        props.history.push(`/listing-detail/${spotId}`);
+        props.history.push(`/my-bookings`);
       })
       .catch(err => {
         setMessage(err.response.data.message);
@@ -33,6 +31,8 @@ const Booking = props => {
   return (
     <div>
       <h1>When would you like to book this spot?</h1>
+
+      {message && <p>{message}</p>}
 
       <form onSubmit={handleSubmit}>
         <div>

@@ -18,19 +18,9 @@ const SpotDetail = props => {
 
   const deletePost = () => {
     axios.delete(`/parking-spots/delete/${spotId}`).then(response => {
-      // setSpot(null) <-- get err saying edit link cant read prop of null. do i even need this??
-      // see useEffect below. Problem is it run onmount as well as sets state to null
       props.history.push("/listings");
-      console.log(spot);
     });
   };
-
-  //   useEffect(() => {
-  //     return () => {
-  //       setSpot(null);
-  //       console.log(spot);
-  //     };
-  //   });
 
   return (
     <div>
@@ -52,23 +42,25 @@ const SpotDetail = props => {
           <p>Size: {spot.size}</p>
           <h4>Availability</h4>
           <p>
-            From: {new Date(spot.start_date).toDateString()} <br /> @{" "}
-            {new Date(spot.start_time).toTimeString()}
+            From: {new Date(spot.start_date).toDateString()} @{" "}
+            {new Date(spot.start_time).toTimeString().slice(0, 5)}
           </p>
           <p>
-            To: {new Date(spot.end_date).toDateString()} <br /> @{" "}
-            {new Date(spot.end_time).toTimeString()}
+            To: {new Date(spot.end_date).toDateString()} @{" "}
+            {new Date(spot.end_time).toTimeString().slice(0, 5)}
           </p>
           <p>Posted by: {spot.owner.username}</p>
         </>
       ) : null}
 
-      {showEdit ? <Link to={`/edit/${spot._id}`}>Edit your post</Link> : null}
+      {showEdit ? (
+        <Link to={`/edit/${spot._id}`}>Edit your listing</Link>
+      ) : null}
 
       <br />
 
       {showDelete ? (
-        <button onClick={deletePost}>Delete your post</button>
+        <button onClick={deletePost}>Delete your listing</button>
       ) : null}
     </div>
   );
