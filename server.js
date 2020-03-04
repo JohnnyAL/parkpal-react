@@ -24,11 +24,11 @@ require("./session")(app);
 const routes = require("./routes"); // this is our controller and will manage all the routes so we don't have to register any new route handler here
 app.use(routes);
 
-app.listen(process.env.PORT, () => {
-  console.log(`Express server listening to: ${process.env.PORT}`);
-});
-
 app.use((req, res) => {
   // If no routes match, send them the React HTML.
   res.sendFile(__dirname + "/client/build/index.html");
+});
+
+app.listen(process.env.PORT, () => {
+  console.log(`Express server listening to: ${process.env.PORT}`);
 });
