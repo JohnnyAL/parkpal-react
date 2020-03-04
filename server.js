@@ -10,7 +10,7 @@ const app = express();
 
 app.use(express.urlencoded({ extended: true })); // sets the `body` object in the `request` with the values from an HTML POST form
 
-app.use(express.static(path.join(__dirname, "/client/build")));
+app.use(express.static("client/build"));
 
 const Spot = require("./models/Spot");
 Spot.createIndexes();
