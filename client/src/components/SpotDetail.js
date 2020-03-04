@@ -9,16 +9,23 @@ const SpotDetail = props => {
   const [showDelete, setDelete] = useState(false);
 
   useEffect(() => {
-    axios.get(`/parking-spots/detail/${spotId}`).then(response => {
-      setSpot(response.data.spot);
-      setEdit(response.data.showEdit);
-      setDelete(response.data.showDelete);
-    });
+    axios
+      .get(`/parking-spots/detail/${spotId}`)
+      .then(response => {
+        setSpot(response.data.spot);
+        setEdit(response.data.showEdit);
+        setDelete(response.data.showDelete);
+      })
+      .catch(err => {
+        if (err) {
+          return props.history.push("/*");
+        }
+      });
   }, []);
 
   const deletePost = () => {
     axios.delete(`/parking-spots/delete/${spotId}`).then(response => {
-      props.history.push("/listings");
+      props.history.push("/my-listings");
     });
   };
 

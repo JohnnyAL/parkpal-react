@@ -11,6 +11,15 @@ const MyListings = props => {
     });
   }, []);
 
+  const deleteSpot = (listingId, index) => {
+    console.log("Clicked Delete");
+    axios.delete(`/parking-spots/delete/${listingId}`).then(res => {
+      let withoutListing = [...listings];
+      withoutListing.splice(index, 1);
+      setListings(withoutListing);
+    });
+  };
+
   if (listings?.length == 0) {
     return (
       <p>
@@ -22,7 +31,7 @@ const MyListings = props => {
     return (
       <div>
         <h1>My Listings</h1>
-        {listings.map(listing => {
+        {listings.map((listing, index) => {
           return (
             <div key={listing._id}>
               <img
@@ -58,14 +67,9 @@ const MyListings = props => {
               <Link to={`/edit/${listing._id}`}>Edit your listing</Link>
               <br />
               <button
-                onClick={() =>
-                  axios
-                    .delete(`/parking-spots/delete/${listing._id}`)
-                    .then(res => {
-                      console.log("deleted response", res);
-                      props.history.push("/my-listings");
-                    })
-                }
+                onClick={() => {
+                  deleteSpot(listing._id, index);
+                }}
               >
                 Delete
               </button>

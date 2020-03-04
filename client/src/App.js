@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Route } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import "./App.css";
 import Home from "./components/Home.js";
 import Navbar from "./components/Navbar.js";
@@ -12,6 +12,7 @@ import SpotDetail from "./components/SpotDetail.js";
 import Booking from "./components/Booking.js";
 import MyBookings from "./components/MyBookings.js";
 import MyListings from "./components/MyListings.js";
+import RouteNotFound from "./components/RouteNotFound.js";
 
 const App = props => {
   let [user, setUser] = useState(props.user);
@@ -23,36 +24,60 @@ const App = props => {
   return (
     <div className="App">
       <Navbar setUser={setUserState} user={user} />
-      <Route exact path="/" render={props => <Home {...props} user={user} />} />
-      <Route
-        path="/signup"
-        render={props => (
-          <Signup {...props} role="basic" setUser={setUserState} />
-        )}
-      />
-      <Route
-        path="/signup-host"
-        render={props => (
-          <Signup {...props} role="host" setUser={setUserState} />
-        )}
-      />
-      <Route
-        path="/login"
-        render={props => <Login {...props} setUser={setUserState} />}
-      />
-      <Route
-        path="/add"
-        render={props => <Add {...props} setUser={setUserState} />}
-      />
-      <Route path="/edit/:spotId" render={props => <Edit {...props} />} />
-      <Route path="/listings" component={Spots} />
-      <Route
-        path="/listing-detail/:spotId"
-        render={props => <SpotDetail {...props} />}
-      />
-      <Route path="/booking/:spotId" render={props => <Booking {...props} />} />
-      <Route path="/my-bookings" component={MyBookings} />
-      <Route path="/my-listings" render={props => <MyListings {...props} />} />
+      <Switch>
+        <Route
+          exact
+          path="/"
+          render={props => <Home {...props} user={user} />}
+        />
+        <Route
+          exact
+          path="/signup"
+          render={props => (
+            <Signup {...props} role="basic" setUser={setUserState} />
+          )}
+        />
+        <Route
+          exact
+          path="/signup-host"
+          render={props => (
+            <Signup {...props} role="host" setUser={setUserState} />
+          )}
+        />
+        <Route
+          exact
+          path="/login"
+          render={props => <Login {...props} setUser={setUserState} />}
+        />
+        <Route
+          exact
+          path="/add"
+          render={props => <Add {...props} setUser={setUserState} />}
+        />
+        <Route
+          exact
+          path="/edit/:spotId"
+          render={props => <Edit {...props} />}
+        />
+        <Route exact path="/listings" component={Spots} />
+        <Route
+          exact
+          path="/listing-detail/:spotId"
+          render={props => <SpotDetail {...props} />}
+        />
+        <Route
+          exact
+          path="/booking/:spotId"
+          render={props => <Booking {...props} />}
+        />
+        <Route exact path="/my-bookings" component={MyBookings} />
+        <Route
+          exact
+          path="/my-listings"
+          render={props => <MyListings {...props} />}
+        />
+        <Route path="*" component={RouteNotFound} />
+      </Switch>
     </div>
   );
 };

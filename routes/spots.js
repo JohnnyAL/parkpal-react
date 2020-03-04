@@ -3,18 +3,7 @@ const router = express.Router();
 const Spot = require("../models/Spot");
 const User = require("../models/User");
 const geocoder = require("../utils/geocoder");
-
-// router.get("/listings", (req, res) => {
-//   Spot.find()
-//     .then(spots => {
-//       res.json(spots);
-//     })
-//     .catch(err => {
-//       res.status(500).json({
-//         message: err.message
-//       });
-//     });
-// });
+const Booking = require("../models/Booking");
 
 router.get("/filtered-query", (req, res, next) => {
   if (
@@ -309,9 +298,22 @@ router.post("/edit/:id", (req, res, next) => {
 });
 
 router.delete("/delete/:id", (req, res, next) => {
-  Spot.deleteOne({ _id: req.params.id, owner: req.session.user._id })
-    .then(response => {
-      res.json(response);
+  Spot.findById(req.params.id)
+    .then(spot => {
+      Promise.all(
+        spot.bookings.map(bookingId => {
+          return new Promise(function(resolve, reject) {
+            resolve(Booking.findByIdAndDelete(bookingId));
+          });
+        })
+      ).then(result => {
+        Spot.deleteOne({
+          _id: req.params.id,
+          owner: req.session.user._id
+        }).then(response => {
+          res.json(response);
+        });
+      });
     })
     .catch(err => {
       res.status(500).json({

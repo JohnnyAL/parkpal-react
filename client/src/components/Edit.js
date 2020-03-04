@@ -7,25 +7,32 @@ const Edit = props => {
   const [message, setMessage] = useState("");
 
   useEffect(() => {
-    axios.get(`/parking-spots/edit/${spotId}`).then(res => {
-      let data = res.data;
-      setSpot({
-        name: data.name,
-        description: data.description,
-        street_address: data.address.street_address,
-        city: data.address.city,
-        state: data.address.state,
-        zip_code: data.address.zip_code,
-        country: data.address.country,
-        type: data.type,
-        size: data.size,
-        start_date: data.start_date.slice(0, 10),
-        end_date: data.end_date.slice(0, 10),
-        start_time: new Date(data.start_time).toTimeString().slice(0, 5),
-        end_time: new Date(data.end_time).toTimeString().slice(0, 5),
-        price: data.price
+    axios
+      .get(`/parking-spots/edit/${spotId}`)
+      .then(res => {
+        let data = res.data;
+        setSpot({
+          name: data.name,
+          description: data.description,
+          street_address: data.address.street_address,
+          city: data.address.city,
+          state: data.address.state,
+          zip_code: data.address.zip_code,
+          country: data.address.country,
+          type: data.type,
+          size: data.size,
+          start_date: data.start_date.slice(0, 10),
+          end_date: data.end_date.slice(0, 10),
+          start_time: new Date(data.start_time).toTimeString().slice(0, 5),
+          end_time: new Date(data.end_time).toTimeString().slice(0, 5),
+          price: data.price
+        });
+      })
+      .catch(err => {
+        if (err) {
+          return props.history.push("/*");
+        }
       });
-    });
   }, []);
 
   const handleChange = event => {
