@@ -10,6 +10,8 @@ const app = express();
 
 app.use(express.urlencoded({ extended: true })); // sets the `body` object in the `request` with the values from an HTML POST form
 
+app.use(express.static(path.join(__dirname, "/client/build")));
+
 const Spot = require("./models/Spot");
 Spot.createIndexes();
 
@@ -24,4 +26,9 @@ app.use(routes);
 
 app.listen(process.env.PORT, () => {
   console.log(`Express server listening to: ${process.env.PORT}`);
+});
+
+app.use((req, res) => {
+  // If no routes match, send them the React HTML.
+  res.sendFile(__dirname + "/client/build/index.html");
 });
