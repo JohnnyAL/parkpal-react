@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import SpotsList from "./SpotsList";
+import Map from "./Map";
 
 const Spots = props => {
-  const [spots, setSpots] = useState(null);
+  const [spots, setSpots] = useState([]);
 
   useEffect(() => {
     setSpots(props.location.state?.spots);
@@ -12,6 +13,7 @@ const Spots = props => {
     <div>
       <h1>Available Parking Spots</h1>
       <SpotsList spots={spots} />
+      <Map spots={spots} />
     </div>
   );
 };
