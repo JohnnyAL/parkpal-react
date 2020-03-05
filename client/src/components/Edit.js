@@ -56,7 +56,7 @@ const Edit = props => {
     <div className="add-edit">
       {spot ? (
         <>
-          <h1>Edit Your Parking Spot</h1>
+          <h1>Edit Your Post</h1>
 
           <br />
 
@@ -164,7 +164,7 @@ const Edit = props => {
               <br />
               <br />
 
-              <label htmlFor="start-date">Available from:</label>
+              <label htmlFor="start-date">Available from: </label>
               <input
                 type="date"
                 id="start-date"
@@ -173,7 +173,7 @@ const Edit = props => {
                 onChange={handleChange}
               />
 
-              <label htmlFor="start-time">at:</label>
+              <label htmlFor="start-time">at: </label>
               <input
                 type="time"
                 id="start-time"
@@ -184,7 +184,7 @@ const Edit = props => {
 
               <br />
 
-              <label htmlFor="end-date">Available to:</label>
+              <label htmlFor="end-date">Available to: </label>
               <input
                 type="date"
                 id="end-date"
@@ -193,7 +193,7 @@ const Edit = props => {
                 onChange={handleChange}
               />
 
-              <label htmlFor="end-time">at:</label>
+              <label htmlFor="end-time">at: </label>
               <input
                 type="time"
                 id="end-time"
@@ -220,8 +220,6 @@ const Edit = props => {
               <button type="submit">Submit</button>
             </div>
           </form>
-
-          <a href="/">Home</a>
         </>
       ) : null}
     </div>

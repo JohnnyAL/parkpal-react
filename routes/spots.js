@@ -50,14 +50,16 @@ router.get("/filtered-query", (req, res, next) => {
         ]
       }).then(spots => {
         res.json({
+          geolocation,
           spots,
-          spotDetail: JSON.stringify(spots),
           user: req.session.user
         });
       });
     })
     .catch(err => {
-      next(err);
+      res.status(500).json({
+        message: err.message
+      });
     });
 });
 
@@ -189,7 +191,6 @@ router.get("/detail/:id", (req, res) => {
       //make sure I'm using on this data vvv or else get rid of it
       res.json({
         spot,
-        spotDetail: JSON.stringify(spot),
         showDelete: showDelete,
         showEdit: showEdit
       });

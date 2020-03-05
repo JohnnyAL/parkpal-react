@@ -34,9 +34,7 @@ const Add = props => {
         let spotId = response.data.createdSpot._id;
         props.history.push(`/listing-detail/${spotId}`);
         // update state for user in <App/>
-        if (response.data.user.role === "basic") {
-          props.setUser(response.data.user);
-        }
+        props.setUser(response.data.user);
       })
       .catch(err => {
         setMessage(err.response.data.message);
@@ -153,7 +151,7 @@ const Add = props => {
           <br />
           <br />
 
-          <label htmlFor="start-date">Available from:</label>
+          <label htmlFor="start-date">Available from: </label>
           <input
             type="date"
             id="start-date"
@@ -162,7 +160,7 @@ const Add = props => {
             onChange={handleChange}
           />
 
-          <label htmlFor="start-time">at:</label>
+          <label htmlFor="start-time">at: </label>
           <input
             type="time"
             id="start-time"
@@ -173,7 +171,7 @@ const Add = props => {
 
           <br />
 
-          <label htmlFor="end-date">Available to:</label>
+          <label htmlFor="end-date">Available to: </label>
           <input
             type="date"
             id="end-date"
@@ -182,7 +180,7 @@ const Add = props => {
             onChange={handleChange}
           />
 
-          <label htmlFor="end-time">at:</label>
+          <label htmlFor="end-time">at: </label>
           <input
             type="time"
             id="end-time"
@@ -209,8 +207,6 @@ const Add = props => {
           <button type="submit">Submit</button>
         </div>
       </form>
-
-      <a href="/">Home</a>
     </div>
   );
 };

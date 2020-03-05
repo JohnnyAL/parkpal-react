@@ -29,23 +29,23 @@ const Booking = props => {
   };
 
   return (
-    <div>
+    <div className="book-spot">
       <h1>When would you like to book this spot?</h1>
-
-      {message && <p>{message}</p>}
+      <br />
+      {message && <p className="message">{message}</p>}
 
       <form onSubmit={handleSubmit}>
-        <div>
-          <div>
-            <label htmlFor="from-date">From:</label>
+        <div className="book-spot-form">
+          <div className="book-spot-inputs">
+            <label htmlFor="from-date">From: </label>
             <input
               type="date"
               id="from-date"
               name="start_date"
               value={booking.start_date}
               onChange={handleChange}
-            />
-            <label htmlFor="from-time">at:</label>
+            />{" "}
+            <label htmlFor="from-time">at: </label>
             <input
               type="time"
               id="from-time"
@@ -54,16 +54,16 @@ const Booking = props => {
               onChange={handleChange}
             />
           </div>
-          <div>
-            <label htmlFor="to-date">To:</label>
+          <div className="book-spot-inputs">
+            <label htmlFor="to-date">To: </label>
             <input
               type="date"
               id="to-date"
               name="end_date"
               value={booking.end_date}
               onChange={handleChange}
-            />
-            <label htmlFor="to-time">at:</label>
+            />{" "}
+            <label htmlFor="to-time">at: </label>
             <input
               type="time"
               id="to-time"
@@ -72,9 +72,9 @@ const Booking = props => {
               onChange={handleChange}
             />
           </div>
-        </div>
 
-        <button type="submit">Book this spot!</button>
+          <button type="submit">Book this spot!</button>
+        </div>
       </form>
     </div>
   );

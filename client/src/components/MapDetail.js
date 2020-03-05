@@ -34,39 +34,37 @@ const scaleControlStyle = {
 
 let size = 30;
 
-class Map extends Component {
+class MapDetail extends Component {
   state = {
     viewport: {
       width: 600,
       height: 500,
-      latitude: this.props.geolocation?.latitude,
-      longitude: this.props.geolocation?.longitude,
+      latitude: this.props.spot.geolocation.coordinates[1],
+      longitude: this.props.spot.geolocation.coordinates[0],
       zoom: 10.5
     }
   };
 
   loadMarkers = () => {
-    return this.props.spots.map(spot => {
-      return (
-        <Marker
-          key={spot._id}
-          latitude={parseFloat(spot.geolocation.coordinates[1])}
-          longitude={parseFloat(spot.geolocation.coordinates[0])}
-        >
-          <img
-            style={{
-              cursor: "pointer",
-              fill: "#d00",
-              stroke: "none",
-              transform: `translate(${-size / 2}px,${-size}px)`
-            }}
-            height={`${size}px`}
-            src="/map-pin.png"
-            alt=""
-          />
-        </Marker>
-      );
-    });
+    return (
+      <Marker
+        key={this.props.spot._id}
+        latitude={parseFloat(this.props.spot.geolocation.coordinates[1])}
+        longitude={parseFloat(this.props.spot.geolocation.coordinates[0])}
+      >
+        <img
+          style={{
+            cursor: "pointer",
+            fill: "#d00",
+            stroke: "none",
+            transform: `translate(${-size / 2}px,${-size}px)`
+          }}
+          height={`${size}px`}
+          src="/map-pin.png"
+          alt=""
+        />
+      </Marker>
+    );
   };
 
   render() {
@@ -95,4 +93,4 @@ class Map extends Component {
   }
 }
 
-export default Map;
+export default MapDetail;

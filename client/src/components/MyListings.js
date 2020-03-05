@@ -22,59 +22,63 @@ const MyListings = props => {
 
   if (listings?.length == 0) {
     return (
-      <p>
+      <h2 className="no-bookings-listings">
         You haven't posted any parking spots. Click <Link to="/add">here</Link>{" "}
-        to list spot
-      </p>
+        to list a spot.
+      </h2>
     );
   } else if (listings?.length > 0) {
     return (
-      <div>
+      <div className="listings">
         <h1>My Listings</h1>
         {listings.map((listing, index) => {
           return (
             <div key={listing._id}>
-              <img
-                height="200px"
-                src={listing.image}
-                alt="image not available"
-              />
-              <p>{listing.name}</p>
-              <p>Price: ${listing.price}/hour</p>
-              <p>{listing.description}</p>
-              <h4>Address</h4>
-              <p>
-                {listing.address.street_address}
+              <div className="listings-info">
+                <img
+                  height="200px"
+                  src={listing.image}
+                  alt="image not available"
+                />
+                <h2>{listing.name}</h2>
+                <p>Price: ${listing.price}/hour</p>
                 <br />
-                {listing.address.city}, {listing.address.state}{" "}
-                {listing.address.zip_code}
-              </p>
-              <p>Type: {listing.type}</p>
-              <p>Size: {listing.size}</p>
-              <h4>Availability</h4>
-              <p>
-                From: {new Date(listing.start_date).toDateString()} @{" "}
-                {new Date(listing.start_time).toTimeString().slice(0, 5)}
-              </p>
-              <p>
-                To: {new Date(listing.end_date).toDateString()} @{" "}
-                {new Date(listing.end_time).toTimeString().slice(0, 5)}
-              </p>
-              <Link to={`listing-detail/${listing._id}`}>
-                View your listing
-              </Link>
-              <br />
-              <Link to={`/edit/${listing._id}`}>Edit your listing</Link>
-              <br />
-              <button
-                onClick={() => {
-                  deleteSpot(listing._id, index);
-                }}
-              >
-                Delete
-              </button>
-
-              <hr />
+                <p>{listing.description}</p>
+                <br />
+                <h4>Address</h4>
+                <p>
+                  {listing.address.street_address}
+                  <br />
+                  {listing.address.city}, {listing.address.state}{" "}
+                  {listing.address.zip_code}
+                </p>
+                <br />
+                <p>Type: {listing.type}</p>
+                <p>Size: {listing.size}</p>
+                <br />
+                <h4>Availability</h4>
+                <p>
+                  From: {new Date(listing.start_date).toDateString()} @{" "}
+                  {new Date(listing.start_time).toTimeString().slice(0, 5)}
+                </p>
+                <p>
+                  To: {new Date(listing.end_date).toDateString()} @{" "}
+                  {new Date(listing.end_time).toTimeString().slice(0, 5)}
+                </p>
+                <br />
+                <Link to={`listing-detail/${listing._id}`}>
+                  View your listing
+                </Link>
+                <Link to={`/edit/${listing._id}`}>Edit your listing</Link>
+                <br />
+                <button
+                  onClick={() => {
+                    deleteSpot(listing._id, index);
+                  }}
+                >
+                  Delete
+                </button>
+              </div>
             </div>
           );
         })}

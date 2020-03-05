@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import MapDetail from "./MapDetail";
 
 const SpotDetail = props => {
   const spotId = props.match.params.spotId;
@@ -30,44 +31,70 @@ const SpotDetail = props => {
   };
 
   return (
-    <div>
+    <div className="detail">
       {spot ? (
         <>
-          <h1>{spot.name}</h1>
-          <p>Price: ${spot.price}/hour</p>
-          <p>
-            <img height="300px" src={spot.image} alt="image not available" />
-          </p>
-          <p>{spot.description}</p>
-          <h4>Address</h4>
-          <p>
-            {spot.address.street_address}
-            <br />
-            {spot.address.city}, {spot.address.state} {spot.address.zip_code}
-          </p>
-          <p>Type: {spot.type}</p>
-          <p>Size: {spot.size}</p>
-          <h4>Availability</h4>
-          <p>
-            From: {new Date(spot.start_date).toDateString()} @{" "}
-            {new Date(spot.start_time).toTimeString().slice(0, 5)}
-          </p>
-          <p>
-            To: {new Date(spot.end_date).toDateString()} @{" "}
-            {new Date(spot.end_time).toTimeString().slice(0, 5)}
-          </p>
-          <p>Posted by: {spot.owner.username}</p>
+          <div className="spot-details">
+            <div className="detail-top">
+              <div>
+                <h1>{spot.name}</h1>
+                <p>Price: ${spot.price}/hour</p>
+              </div>
+              <p className="book-button">
+                <Link to={`/booking/${spot._id}`}>Book Now</Link>
+              </p>
+            </div>
+            <div className="detail-bottom">
+              <p>
+                <img
+                  height="300px"
+                  src={spot.image}
+                  alt="image not available"
+                />
+              </p>
+              <p>{spot.description}</p>
+              <br />
+              <h4>Address</h4>
+              <p>
+                {spot.address.street_address}
+                <br />
+                {spot.address.city}, {spot.address.state}{" "}
+                {spot.address.zip_code}
+              </p>
+              <br />
+              <p>
+                <span>Type: </span>
+                {spot.type}
+              </p>
+              <p>
+                <span>Size: </span>
+                {spot.size}
+              </p>
+              <br />
+              <h4>Availability</h4>
+              <p>
+                From: {new Date(spot.start_date).toDateString()} @{" "}
+                {new Date(spot.start_time).toTimeString().slice(0, 5)}
+              </p>
+              <p>
+                To: {new Date(spot.end_date).toDateString()} @{" "}
+                {new Date(spot.end_time).toTimeString().slice(0, 5)}
+              </p>
+              <br />
+              <p>Posted by: {spot.owner.username}</p>
+              <br />
+              {showEdit ? (
+                <Link to={`/edit/${spot._id}`}>Edit your listing</Link>
+              ) : null}
+            </div>
+            {/* {showDelete ? (
+              <button onClick={deletePost}>Delete your listing</button>
+            ) : null} */}
+          </div>
+          <div>
+            <MapDetail spot={spot} />
+          </div>
         </>
-      ) : null}
-
-      {showEdit ? (
-        <Link to={`/edit/${spot._id}`}>Edit your listing</Link>
-      ) : null}
-
-      <br />
-
-      {showDelete ? (
-        <button onClick={deletePost}>Delete your listing</button>
       ) : null}
     </div>
   );

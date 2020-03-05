@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const Signup = props => {
   const [signup, setSignup] = useState({
@@ -35,30 +36,38 @@ const Signup = props => {
   };
 
   return (
-    <>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="username">Username: </label>
-        <input
-          type="text"
-          id="username"
-          name="username"
-          value={username}
-          onChange={handleChange}
-        />
-
-        <label htmlFor="password">Password: </label>
-        <input
-          type="password"
-          name="password"
-          id="password"
-          value={password}
-          onChange={handleChange}
-        />
-
-        <button type="submit">Sign up</button>
-      </form>
-      {message && <p>{message}</p>}
-    </>
+    <div className="auth">
+      <div className="auth-form">
+        <h1>Sign up</h1>
+        {message && <p className="message">{message}</p>}
+        <form onSubmit={handleSubmit}>
+          <div className="auth-inputs">
+            <label htmlFor="username">Username: </label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              value={username}
+              onChange={handleChange}
+            />
+            <br />
+            <label htmlFor="password">Password: </label>
+            <input
+              type="password"
+              name="password"
+              id="password"
+              value={password}
+              onChange={handleChange}
+            />
+            <br />
+            <button type="submit">Sign up</button>
+          </div>
+        </form>
+        <p class="account-message">
+          Already have an account? <Link to="/login">Log in</Link>
+        </p>
+      </div>
+    </div>
   );
 };
 
