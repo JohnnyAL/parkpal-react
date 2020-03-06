@@ -44,6 +44,7 @@ const SpotDetail = props => {
                 <Link to={`/booking/${spot._id}`}>Book Now</Link>
               </p>
             </div>
+            <br />
             <div className="detail-bottom">
               <p>
                 <img
@@ -52,6 +53,7 @@ const SpotDetail = props => {
                   alt="image not available"
                 />
               </p>
+              <br />
               <p>{spot.description}</p>
               <br />
               <h4>Address</h4>

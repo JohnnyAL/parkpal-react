@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 import axios from "axios";
 
-const Home = () => {
+const Home = props => {
   const [spots, setSpots] = useState(null);
   const [geolocation, setGeolocation] = useState(null);
   const [query, setQuery] = useState({
@@ -49,7 +49,13 @@ const Home = () => {
   return (
     <div className="home-page">
       <div className="search-box">
-        <h3>Find parking for work, leisure and more!</h3>
+        {props.user ? (
+          <h3>
+            Hi, {props.user.username}! Find parking for work, leisure and more!
+          </h3>
+        ) : (
+          <h3>Find parking for work, leisure and more!</h3>
+        )}
         <form onSubmit={handleSubmit} className="search-form">
           {message && <p className="message">{message}</p>}
           <div className="search-location">

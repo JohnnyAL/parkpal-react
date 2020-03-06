@@ -31,6 +31,7 @@ const MyBookings = () => {
                   src={booking.spot.image}
                   alt="image not available"
                 />
+                <br />
                 <h2>{booking.spot.name}</h2>
                 <p>
                   {booking.spot.address.street_address}

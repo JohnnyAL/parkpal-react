@@ -60,7 +60,7 @@ const Edit = props => {
 
           <br />
 
-          {message && <p>{message}</p>}
+          {message && <p className="message">{message}</p>}
 
           <form onSubmit={handleSubmit}>
             <div className="add-edit-form">

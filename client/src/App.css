@@ -44,6 +44,12 @@
   padding: 0;
 }
 
+.App {
+  background-image: url(/background.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
 body {
   font-family: "Poppins";
   font-size: 16px;
@@ -51,7 +57,7 @@ body {
 
 .home-page {
   height: 700px;
-  background-image: url(/background.jpg);
+  /* background-image: url(/background.jpg); */
   background-repeat: no-repeat;
   background-size: cover;
   padding-top: 5%;
@@ -67,8 +73,8 @@ body {
 
 nav {
   background-image: linear-gradient(
-    rgba(77, 141, 201, 0.527),
-    rgba(77, 141, 201, 0)
+    rgba(0, 0, 0, 0.61),
+    rgba(128, 128, 128, 0)
   );
   text-shadow: white 0 0 10px;
   display: flex;
@@ -206,6 +212,7 @@ nav {
   justify-content: space-evenly;
   padding-top: 2%;
   position: relative;
+  padding-bottom: 3%;
 }
 
 .available-spots a {
@@ -216,6 +223,8 @@ nav {
   display: flex;
   flex-direction: column;
   width: 40%;
+  height: 700px;
+  overflow-y: auto;
 }
 
 .listing-box ul {
@@ -223,7 +232,8 @@ nav {
   justify-content: space-between;
   list-style: none;
   border-radius: 10px;
-  box-shadow: 1px 1px 5px 0 black;
+  /* box-shadow: 1px 1px 5px 0 black; */
+  background-color: rgba(255, 255, 255, 0.774);
   padding: 3% 6% 3% 3%;
   line-height: 2em;
   margin-bottom: 3%;
@@ -246,7 +256,7 @@ nav {
 }
 
 .book-button {
-  background-color: #0781b99d;
+  background-color: #0781b994;
   border: 1px solid black;
   border-radius: 7px;
   padding: 2% 1%;
@@ -267,8 +277,9 @@ nav {
 .detail {
   display: flex;
   justify-content: space-evenly;
-  padding-top: 3%;
-  margin-bottom: 2%;
+  padding: 3% 0;
+  /* margin-bottom: 2%; */
+  /* height: 800px; */
 }
 
 .detail a {
@@ -309,6 +320,7 @@ nav {
 .auth {
   display: flex;
   justify-content: center;
+  height: 700px;
 }
 
 .auth-form {
@@ -336,6 +348,13 @@ nav {
 .auth-inputs button {
   width: 20%;
   padding: 2%;
+  background-color: #0781b994;
+  width: 100px;
+  padding: 2%;
+  font-size: 15px;
+  margin: 0 auto;
+  border-radius: 10px;
+  border: 1px solid black;
 }
 
 .auth-inputs input {
@@ -350,6 +369,7 @@ nav {
   flex-direction: column;
   align-items: center;
   margin-top: 2%;
+  padding-bottom: 3%;
 }
 
 .add-edit-form {
@@ -370,9 +390,13 @@ nav {
 }
 
 .add-edit-form button {
+  background-color: #0781b994;
   width: 100%;
   padding: 2%;
   font-size: 1.5em;
+  margin: 0 auto;
+  border-radius: 10px;
+  border: 1px solid black;
 }
 
 .add-edit a {
@@ -396,6 +420,7 @@ nav {
   align-items: center;
   text-align: center;
   margin-top: 2%;
+  padding-bottom: 3%;
 }
 
 .bookings-info {
@@ -404,6 +429,7 @@ nav {
   align-items: center;
   border-radius: 2%;
   box-shadow: 1px 1px 5px 0 black;
+  background-color: rgba(255, 255, 255, 0.774);
   width: 600px;
   padding: 3% 0;
   margin: 2%;
@@ -415,6 +441,7 @@ nav {
   align-items: center;
   text-align: center;
   margin-top: 2%;
+  padding-bottom: 3%;
 }
 
 .listings-info {
@@ -423,13 +450,19 @@ nav {
   align-items: center;
   border-radius: 2%;
   box-shadow: 1px 1px 5px 0 black;
+  background-color: rgba(255, 255, 255, 0.774);
   width: 600px;
   padding: 3% 2%;
   margin: 2%;
 }
 
 .listings button {
+  font-size: 15px;
   padding: 2% 4%;
+  margin: 0 auto;
+  border-radius: 10px;
+  border: 1px solid black;
+  background-color: #0781b994;
 }
 
 .no-bookings-listings {
@@ -442,6 +475,7 @@ nav {
   flex-direction: column;
   align-items: center;
   margin-top: 2%;
+  height: 700px;
 }
 
 .book-spot-form {
@@ -452,7 +486,7 @@ nav {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  border-radius: 2%;
+  border-radius: 10px;
   box-shadow: 1px 1px 5px 0 black;
   padding: 3%;
   margin-top: 5%;
@@ -460,9 +494,13 @@ nav {
 }
 
 .book-spot-form button {
-  width: 100%;
+  background-color: #0781b994;
+  width: 400px;
   padding: 2%;
   font-size: 30px;
+  margin: 0 auto;
+  border-radius: 10px;
+  border: 1px solid black;
 }
 
 .book-spot-inputs input {
@@ -470,4 +508,10 @@ nav {
   font-family: "Poppins";
   padding: 1%;
   border-radius: 0.2em;
+}
+
+.route-not-found {
+  height: 700px;
+  margin-top: 5%;
+  text-align: center;
 }
