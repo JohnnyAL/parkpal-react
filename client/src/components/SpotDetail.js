@@ -75,12 +75,14 @@ const SpotDetail = props => {
               <br />
               <h4>Availability</h4>
               <p>
-                From: {new Date(spot.start_date).toDateString()} @{" "}
-                {new Date(spot.start_time).toTimeString().slice(0, 5)}
+                From: {new Date(spot.start_date).toDateString()}
+                {/* @{" "}
+                {new Date(spot.start_time).toTimeString().slice(0, 5)} */}
               </p>
               <p>
-                To: {new Date(spot.end_date).toDateString()} @{" "}
-                {new Date(spot.end_time).toTimeString().slice(0, 5)}
+                To: {new Date(spot.end_date).toDateString()}
+                {/* @{" "}
+                {new Date(spot.end_time).toTimeString().slice(0, 5)} */}
               </p>
               <br />
               <p>Posted by: {spot.owner.username}</p>
