@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import SpotsList from "./SpotsList";
 import Map from "./Map";
 
-const Spots = props => {
+const Spots = (props) => {
   const [spots, setSpots] = useState([]);
   const [geolocation] = useState(props.location.state?.geolocation);
 
@@ -20,7 +20,11 @@ const Spots = props => {
       </div>
     );
   } else {
-    return <h2>No parking spots available. Please check back later.</h2>;
+    return (
+      <h2 className="no-parking-available">
+        No parking spots available. Please check back later.
+      </h2>
+    );
   }
 };
 

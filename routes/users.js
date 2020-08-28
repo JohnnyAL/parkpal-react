@@ -20,7 +20,7 @@ router.post("/signup", (req, res, next) => {
   }
 
   User.findOne({ username: username })
-    .then(user => {
+    .then((user) => {
       if (user) {
         return res
           .status(400)
@@ -29,19 +29,19 @@ router.post("/signup", (req, res, next) => {
 
       bcrypt
         .hash(password, 10)
-        .then(hash => {
+        .then((hash) => {
           return User.create({
             username: username,
             password: hash,
-            role: role
+            role: role,
           });
         })
-        .then(createdUser => {
+        .then((createdUser) => {
           req.session.user = createdUser;
           res.json(createdUser);
         });
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).json({ message: "Error while authorizing" });
     });
 });
@@ -53,7 +53,7 @@ router.post("/login", (req, res, next) => {
   let user;
 
   User.findOne({ username: username })
-    .then(foundUser => {
+    .then((foundUser) => {
       if (!foundUser) {
         return res
           .status(400)
@@ -64,7 +64,7 @@ router.post("/login", (req, res, next) => {
 
       return bcrypt.compare(password, foundUser.password);
     })
-    .then(match => {
+    .then((match) => {
       if (!match) {
         return res
           .status(400)
