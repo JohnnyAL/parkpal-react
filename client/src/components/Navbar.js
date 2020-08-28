@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-const Navbar = props => {
+const Navbar = (props) => {
   const logout = () => {
     axios.delete("/auth/logout").then(() => {
       props.setUser(null);
@@ -25,9 +25,6 @@ const Navbar = props => {
             </li>
             <li>
               <Link to="/my-bookings">My Bookings</Link>
-            </li>
-            <li>
-              <Link to="#">Help</Link>
             </li>
             <li>
               <Link onClick={logout} to="/">
@@ -59,9 +56,6 @@ const Navbar = props => {
               <Link to="/my-listings">My Listings</Link>
             </li>
             <li>
-              <Link to="#">Help</Link>
-            </li>
-            <li>
               <Link onClick={logout} to="/">
                 Log out
               </Link>
@@ -90,9 +84,6 @@ const Navbar = props => {
           </li>
           <li>
             <Link to="/login">Log in</Link>
-          </li>
-          <li>
-            <Link to="#">Help</Link>
           </li>
         </ul>
       </div>

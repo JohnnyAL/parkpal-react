@@ -2,18 +2,18 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-const MyListings = props => {
+const MyListings = (props) => {
   const [listings, setListings] = useState(null);
 
   useEffect(() => {
-    axios.get("/parking-spots/my-listings").then(res => {
+    axios.get("/parking-spots/my-listings").then((res) => {
       setListings(res.data);
     });
   }, []);
 
   const deleteSpot = (listingId, index) => {
     console.log("Clicked Delete");
-    axios.delete(`/parking-spots/delete/${listingId}`).then(res => {
+    axios.delete(`/parking-spots/delete/${listingId}`).then((res) => {
       let withoutListing = [...listings];
       withoutListing.splice(index, 1);
       setListings(withoutListing);
@@ -63,7 +63,7 @@ const MyListings = props => {
                 </p>
                 <p>
                   To: {new Date(listing.end_date).toDateString()} @{" "}
-                  {new Date(listing.end_time).toTimeString().slice(0, 5)}
+                  {new Date(listing.end_time).toTimeString()}
                 </p>
                 <br />
                 <Link to={`listing-detail/${listing._id}`}>

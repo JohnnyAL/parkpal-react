@@ -9,7 +9,13 @@ router.post("/add/:id", (req, res, next) => {
 
   if (!start_date || !end_date || !start_time || !end_time) {
     return res.status(400).json({
-      message: "Please enter valid information for all fields below."
+      message: "Please enter valid information for all fields below.",
+    });
+  }
+
+  if (!req.session.user) {
+    return res.status(400).json({
+      message: "You must create an account before booking a spot.",
     });
   }
 
@@ -19,20 +25,20 @@ router.post("/add/:id", (req, res, next) => {
     start_time: start_date + " " + start_time,
     end_time: end_date + " " + end_time,
     spot: spotId,
-    user: req.session.user._id
+    user: req.session.user._id,
   })
-    .then(createdBooking => {
+    .then((createdBooking) => {
       return Spot.findByIdAndUpdate(
         { _id: spotId },
         { $push: { bookings: createdBooking._id } }
       );
     })
-    .then(updatedSpot => {
+    .then((updatedSpot) => {
       res.json(updatedSpot);
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).json({
-        message: err.message
+        message: err.message,
       });
     });
 });
@@ -40,10 +46,10 @@ router.post("/add/:id", (req, res, next) => {
 router.get("/my-bookings", (req, res, next) => {
   Booking.find({ user: req.session.user._id })
     .populate("spot")
-    .then(bookings => {
+    .then((bookings) => {
       res.json(bookings);
     })
-    .catch(err => {
+    .catch((err) => {
       next(err);
     });
 });
