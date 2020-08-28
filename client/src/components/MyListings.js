@@ -63,7 +63,7 @@ const MyListings = (props) => {
                 </p>
                 <p>
                   To: {new Date(listing.end_date).toDateString()} @{" "}
-                  {new Date(listing.end_time).toTimeString()}
+                  {new Date(listing.end_time).toTimeString().slice(0, 5)}
                 </p>
                 <br />
                 <Link to={`listing-detail/${listing._id}`}>
