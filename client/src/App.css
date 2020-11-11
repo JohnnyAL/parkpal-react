@@ -105,6 +105,10 @@ nav {
   color: #0781b9;
 }
 
+.navbar ul a:hover {
+  color: white;
+}
+
 .nav-links ul a {
   color: black;
 }
