@@ -207,6 +207,10 @@ nav {
   border-radius: 0.2em;
 }
 
+.search-box button:hover {
+  background-color: #35c272;
+}
+
 .search-box a {
   text-decoration: none;
 }
